@@ -1,7 +1,10 @@
-.header img{
+.imgg img{
  height: 80px;
-}
 
+}
+.imgg{
+    background-color: rgb(175, 175, 163)
+}
 .header{
     text-align: center;
 }
