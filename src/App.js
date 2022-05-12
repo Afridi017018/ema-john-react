@@ -8,13 +8,23 @@ import Review from './component/Review/Review';
 import Manage from './component/Manage/Manage';
 import NotFound from './component/NotFound/NotFound';
 import ProductDetail from './component/ProductDetail/ProductDetail';
+import Login from './component/Login/Login';
+import Shipment from './component/Shipment/Shipment';
+import { createContext, useState } from 'react';
+import PrivateRoutes from './component/PrivateRoute/PrivateRoute';
 
+export const UserContext = createContext();
 
 function App() {
+const [loggedInUser, setLoggedInUser] = useState({});
+
   return (
-    <div >
-      <Header></Header>
+   <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>
+<h3>Email : {loggedInUser.email}</h3>
+
+      
     <BrowserRouter>
+    <Header></Header>
     <Routes> 
 
     <Route path="/" element={<Shop />}>
@@ -26,8 +36,22 @@ function App() {
         <Route path="/review" element={<Review />}>
         </Route>
 
-        <Route path="/manage" element={<Manage />}>
+        <Route element={<PrivateRoutes />}>
+        <Route path="/manage" element={<Manage />} />
         </Route>
+
+        {/* <Route path="/manage" element={<Manage />}>
+        </Route> */}
+
+        <Route path="/login" element={<Login />}>
+        </Route>
+
+        <Route element={<PrivateRoutes />}>
+        <Route path="/shipment" element={<Shipment />} />
+        </Route>
+
+        {/* <Route path="/shipment" element={<Shipment />}>
+        </Route> */}
 
         <Route path="/product/:productKey" element={<ProductDetail />}>
         </Route>
@@ -35,7 +59,7 @@ function App() {
         <Route path="*" element={<NotFound />} />
         </Routes>
     </BrowserRouter> 
-    </div>
+    </UserContext.Provider>
   );
 }
 

@@ -26,4 +26,12 @@ nav a{
 nav a:hover{
 background-color: gray;
 }
-    
+
+.header nav small{
+color: white;
+font-size: 15px;
+text-align: end;
+margin-left: 30px;
+/* border: 1px solid lightgray; */
+}
+
