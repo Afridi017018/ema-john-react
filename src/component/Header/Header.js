@@ -6,6 +6,7 @@ import header from './Header.css'
 
 const Header = () => {
     const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+    
     return (
         <div className='header'>
             <div className='imgg'><img src={logo} /></div>
@@ -14,7 +15,8 @@ const Header = () => {
                 <Link to="/shop">shop</Link>
                 <Link to="/review">review</Link>
                 <Link to="/manage">manage</Link>
-                <button onClick={()=> setLoggedInUser({})}>sign out</button>
+                 <button onClick={()=> setLoggedInUser({})}>sign out</button>
+    
                 <small>{loggedInUser.name}</small>
                 
                 </nav>

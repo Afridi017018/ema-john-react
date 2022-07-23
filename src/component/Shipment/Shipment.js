@@ -1,14 +1,45 @@
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { UserContext } from '../../App';
+import { deleteShoppingCart } from '../../utilities/fakedb';
 import './Shipment.css'
 
 const Shipment = () => {
     const [loggedIn,setLoggedIn] = useContext(UserContext);
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
-  const onSubmit = data => console.log(data);
+  const onSubmit = data =>{
+    ///console.log(data);
+    ///
+    let shoppingCart = {};
+        const storedCart = localStorage.getItem('shopping-cart');
+        if(storedCart){
+            shoppingCart = JSON.parse(storedCart);
+        }
+        localStorage.setItem('shopping-cart', JSON.stringify(shoppingCart));
+        ///
+  const orderDetails = {...loggedIn,products: shoppingCart,shipment: data, orderTime: new Date() }
 
-  console.log(watch("example")); // watch input value by passing the name of it
+
+  fetch('http://localhost:5000/addOrder',{
+    method: 'POST',
+    headers:{
+        'Content-Type' : 'application/json'
+    },
+    body: JSON.stringify(orderDetails)
+})
+.then(res=> res.json())
+.then(data=> {
+ /// console.log(data);
+  ///if(data){
+    deleteShoppingCart();
+  alert('your order placed successfully');
+ /// console.log("hi");
+ // }
+})
+
+  } 
+
+  ///console.log(watch("example")); // watch input value by passing the name of it
 
   return (
     
